@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DNA Lab: Chromosomes, Genes &amp; the Double Helix</title>
+<style>
+:root{--bg:#04061a;--bg2:#0a1030;--panel:rgba(14,24,58,.80);--panel2:rgba(22,36,82,.85);--line:#2a4a8c;--tx:#e8f1ff;--mut:#9db3d8;--neon:#22d3ee;--neon2:#a78bfa;--good:#4ade80;--bad:#f87171;--warn:#fbbf24;--A:#4ade80;--T:#f87171;--C:#60a5fa;--G:#fbbf24;--U:#f472b6}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(1100px 650px at 75% -10%,#1b2a7a55,transparent),radial-gradient(900px 600px at 0% 100%,#0b4a6a55,transparent),linear-gradient(#04061a,#070c26)}
+body.fx::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:50;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+button{font:inherit;color:inherit;cursor:pointer}
+#top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(4,6,26,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{font-weight:800;letter-spacing:.04em;color:var(--neon);white-space:nowrap}
+#dots{display:flex;gap:6px;flex:1;justify-content:center;flex-wrap:wrap}
+#dots button{width:14px;height:14px;border-radius:50%;border:1px solid var(--line);background:#0d1740;padding:0}
+#dots button.done{background:var(--neon2)} #dots button.cur{background:var(--neon);box-shadow:0 0 10px var(--neon);transform:scale(1.25)}
+.pill{padding:3px 10px;border-radius:99px;border:1px solid var(--line);background:#0d1740;font-size:13px;white-space:nowrap}
+.tg{background:#0d1740;border:1px solid var(--line);border-radius:8px;padding:4px 9px;font-size:13px}
+.tg[aria-pressed=true]{border-color:var(--neon);color:var(--neon)}
+#stage{max-width:1100px;margin:0 auto;padding:16px 14px 230px}
+.kick{color:var(--neon2);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+h2{margin:2px 0 4px;font-size:clamp(24px,4vw,34px)}
+.lead{color:var(--mut);margin:0 0 12px;max-width:70ch}
+.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+@media(max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 0 24px #0006 inset}
+.cv{width:100%;height:clamp(280px,48vh,440px);display:block;border-radius:12px;background:radial-gradient(circle at 50% 40%,#0f1b4d,#050a22);border:1px solid var(--line);touch-action:none;cursor:grab}
+.cv:active{cursor:grabbing}
+.hint{font-size:13px;color:var(--mut);margin-top:6px}
+.btn{background:linear-gradient(#1b3a8a,#14286a);border:1px solid var(--neon);border-radius:10px;padding:8px 14px;font-weight:600}
+.btn:hover{box-shadow:0 0 12px var(--neon)} .btn.sec{border-color:var(--line);background:#0d1740} .btn:disabled{opacity:.4;cursor:not-allowed}
+.chip{border:1px solid var(--line);background:#0d1740;border-radius:99px;padding:4px 12px;font-size:14px}
+.chip.on{border-color:var(--neon);color:var(--neon);box-shadow:0 0 8px #22d3ee66}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+input[type=range]{width:100%;accent-color:var(--neon)}
+.info h3{margin:0 0 4px;color:var(--neon)} .info p{margin:4px 0}
+.big{font-size:22px;font-weight:700}
+.b{display:inline-flex;width:30px;height:30px;border-radius:7px;align-items:center;justify-content:center;font-weight:800;color:#04061a;font-family:ui-monospace,Menlo,monospace}
+.bA{background:var(--A)}.bT{background:var(--T)}.bC{background:var(--C)}.bG{background:var(--G)}.bU{background:var(--U)}
+button.b{border:0;cursor:pointer}
+.seq{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.cod{display:inline-flex;gap:2px;padding:3px;border:1px dashed var(--line);border-radius:8px;margin:2px}
+.aa{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:52px;padding:4px 6px;border-radius:10px;border:1px solid var(--line);margin:2px;font-size:12px;background:#0d1740}
+.aa b{font-size:15px}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.ok{color:var(--good)} .no{color:var(--bad)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;background:#0d1740;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.opt:hover{border-color:var(--neon)} .opt.right{border-color:var(--good);background:#0f3a2a} .opt.wrong{border-color:var(--bad);background:#401a22}
+pre.cheat{white-space:pre-wrap;background:#050a22;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;max-height:260px;overflow:auto}
+table.pn{border-collapse:collapse;margin:6px auto}
+table.pn td,table.pn th{border:1px solid var(--line);width:78px;height:62px;text-align:center;font-weight:700}
+table.pn th{background:#0d1740;width:70px;height:40px}
+.mini{font-size:13px;color:var(--mut)}
+svg text{font-family:inherit}
+/* dock */
+#dock{position:fixed;left:0;right:0;bottom:0;z-index:30;background:linear-gradient(transparent,rgba(4,6,26,.96) 22%);padding:18px 12px 10px}
+#dockIn{max-width:1100px;margin:0 auto;display:flex;gap:12px;align-items:flex-end;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:8px 12px;box-shadow:0 0 30px #000a}
+#char{width:92px;flex:none;margin-top:-34px}
+#char svg{width:100%;height:auto;display:block;overflow:visible}
+#cap{flex:1;min-width:0}
+#capText{font-size:17px;line-height:1.45;max-height:7.2em;overflow:auto}
+#capText .w{color:#6d7fa8;transition:color .15s}#capText .w.on{color:#fff;text-shadow:0 0 8px #22d3ee88}
+#react{min-height:1.4em;font-size:14px;color:var(--warn);margin-top:2px}
+#ctrls{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+#ctrls button{padding:5px 11px;border-radius:9px;border:1px solid var(--line);background:#0d1740;font-size:14px}
+#nextBtn.pulse{animation:pulse 1s infinite;border-color:var(--neon)}
+@keyframes pulse{50%{box-shadow:0 0 16px var(--neon);background:#16337a}}
+@media(max-width:560px){#top{position:static}#dots{order:5;flex-basis:100%}#ctrls button{padding:3px 8px;font-size:13px}#capText{max-height:4.6em}#char{width:62px;margin-top:-18px}#capText{font-size:15px;max-height:6em}#stage{padding-bottom:250px}.brand{font-size:14px}}
+#toast{position:fixed;top:64px;left:50%;transform:translate(-50%,-30px);opacity:0;z-index:60;background:#14286a;border:1px solid var(--warn);color:var(--warn);padding:10px 20px;border-radius:12px;font-weight:700;transition:.4s;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#14246b,#03040f);padding:16px;text-align:center}
+#intro .box{max-width:560px}
+#intro h1{font-size:clamp(30px,6vw,52px);margin:0 0 8px;background:linear-gradient(90deg,#22d3ee,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+#intro p{color:var(--mut)}
+#intro .btn{margin:6px;font-size:18px;padding:12px 22px}
+.bow{animation:bow 1.2s}
+@keyframes bow{30%{transform:rotate(18deg) translateY(4px)}60%{transform:rotate(18deg) translateY(4px)}}
+#char .eyes{transform-box:fill-box;transform-origin:center}
+#char .blink{animation:blink .15s}
+@keyframes blink{50%{transform:scaleY(.1)}}
+#char svg{animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){#char svg{animation:none}.pulse{animation:none!important}}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}.tbl td{border-bottom:1px solid #1c2c5f;padding:3px 6px}
+.bar{height:16px;border-radius:8px;background:#0d1740;overflow:hidden;border:1px solid var(--line)} .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--neon),var(--neon2));transition:width .5s}
+</style></head><body class="fx">
+<header id="top"><span class="brand">🧬 DNA LAB</span><nav id="dots" aria-label="Scenes"></nav>
+<span class="pill" id="rank">Rank: Cadet</span>
+<button class="tg" id="tgSound" aria-pressed="true" aria-label="Toggle narration sound">🔊 Sound</button>
+<button class="tg" id="tgAuto" aria-pressed="false" aria-label="Toggle auto advance">⏭ Auto</button>
+<button class="tg" id="tgFx" aria-pressed="true" aria-label="Toggle scanline effect">▦ Effects</button></header>
+<main id="stage"></main>
+<footer id="dock"><div id="dockIn">
+<div id="char" aria-label="Doctor Helix the robot guide" role="img"></div>
+<div id="cap"><div id="capText" aria-live="polite"></div><div id="react"></div>
+<div id="ctrls"><button id="backBtn" aria-label="Previous scene">◀ Back</button><button id="replayBtn" aria-label="Replay narration">⟲ Replay</button><button id="stopBtn" aria-label="Pause or resume narration">⏸ Pause</button><button id="nextBtn" aria-label="Next scene">Next ▶</button></div></div></div></footer>
+<div id="toast" role="status"></div>
+<div id="intro"><div class="box"><div style="font-size:60px">🧬</div><h1>DNA Lab</h1>
+<p>Chromosomes, genes and the double helix: zoom in, spin it in 3D, build it, break it. Hosted by <b>Dr. Helix</b>. Made for 9th grade, with extra details for the curious.</p>
+<button class="btn" id="enterSound">🔊 Enter with narration</button><br><button class="btn sec" id="enterSilent">🔇 Enter silently (captions only)</button>
+<p class="mini">Tip: drag any 3D view to rotate it. Arrow keys move between scenes.</p></div></div>
+<script>
+const NARR=__NARR__;
+const AUDIO=__AUDIO__;
