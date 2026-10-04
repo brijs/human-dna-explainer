@@ -3,5 +3,5 @@ tmp.wav
 tts.log
 __pycache__/
 .DS_Store
-test.py
-test2.py
+tests/*.pyc
+

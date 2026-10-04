@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DNA Lab: Chromosomes, Genes &amp; the Double Helix</title>
+<title>__TITLE__</title>
 <style>
 :root{--bg:#04061a;--bg2:#0a1030;--panel:rgba(14,24,58,.80);--panel2:rgba(22,36,82,.85);--line:#2a4a8c;--tx:#e8f1ff;--mut:#9db3d8;--neon:#22d3ee;--neon2:#a78bfa;--good:#4ade80;--bad:#f87171;--warn:#fbbf24;--A:#4ade80;--T:#f87171;--C:#60a5fa;--G:#fbbf24;--U:#f472b6}
 *{box-sizing:border-box}
@@ -87,7 +87,7 @@ svg text{font-family:inherit}
 .tbl{width:100%;border-collapse:collapse;font-size:13px}.tbl td{border-bottom:1px solid #1c2c5f;padding:3px 6px}
 .bar{height:16px;border-radius:8px;background:#0d1740;overflow:hidden;border:1px solid var(--line)} .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--neon),var(--neon2));transition:width .5s}
 </style></head><body class="fx">
-<header id="top"><span class="brand">🧬 DNA LAB</span><nav id="dots" aria-label="Scenes"></nav>
+<header id="top"><a class="brand" href="__HUB__" style="text-decoration:none" title="Back to hub">__BRAND__</a><nav id="dots" aria-label="Scenes"></nav>
 <span class="pill" id="rank">Rank: Cadet</span>
 <button class="tg" id="tgSound" aria-pressed="true" aria-label="Toggle narration sound">🔊 Sound</button>
 <button class="tg" id="tgAuto" aria-pressed="false" aria-label="Toggle auto advance">⏭ Auto</button>
@@ -98,10 +98,8 @@ svg text{font-family:inherit}
 <div id="cap"><div id="capText" aria-live="polite"></div><div id="react"></div>
 <div id="ctrls"><button id="backBtn" aria-label="Previous scene">◀ Back</button><button id="replayBtn" aria-label="Replay narration">⟲ Replay</button><button id="stopBtn" aria-label="Pause or resume narration">⏸ Pause</button><button id="nextBtn" aria-label="Next scene">Next ▶</button></div></div></div></footer>
 <div id="toast" role="status"></div>
-<div id="intro"><div class="box"><div style="font-size:60px">🧬</div><h1>DNA Lab</h1>
-<p>Chromosomes, genes and the double helix: zoom in, spin it in 3D, build it, break it. Hosted by <b>Dr. Helix</b>. Made for 9th grade, with extra details for the curious.</p>
-<button class="btn" id="enterSound">🔊 Enter with narration</button><br><button class="btn sec" id="enterSilent">🔇 Enter silently (captions only)</button>
-<p class="mini">Tip: drag any 3D view to rotate it. Arrow keys move between scenes.</p></div></div>
+<div id="intro"><div class="box">__INTRO__</div></div>
 <script>
+__PRELUDE__
 const NARR=__NARR__;
 const AUDIO=__AUDIO__;

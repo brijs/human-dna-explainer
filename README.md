@@ -1,6 +1,6 @@
-# 🧬 DNA Lab: an interactive 3D explainer
+# 🧬 DNA & Protein explainers
 
-**▶ Live explainer: https://brijs.github.io/human-dna-explainer/**
+**▶ Hub: https://brijs.github.io/human-dna-explainer/**  ·  [DNA Lab](https://brijs.github.io/human-dna-explainer/dna/)  ·  [Genomes & Proteins](https://brijs.github.io/human-dna-explainer/genome-proteins/)
 
 [![Live](https://img.shields.io/badge/live-GitHub%20Pages-22d3ee)](https://brijs.github.io/human-dna-explainer/)
 
@@ -23,3 +23,14 @@ Published from `main` + `/docs` via GitHub Pages.
 
 ## Sources and caveats
 Figures are standard textbook / consortium values (e.g. ~3.1 billion base pairs per haploid set, ~20,000 protein-coding genes, 2 nm helix width, ~10.5 bp per turn, human chromosome 2 fusion, HBB sickle-cell Glu→Val). Cross-species similarity numbers are approximate and marked as such in the UI. Gene positions on chromosomes are illustrative, not to scale.
+
+## Module 2: Genomes & Proteins (adult level, three.js)
+15 scenes on the human genome (scale, repeats, variation, regulation), proteins (amino acids, four levels of structure, folding, misfolding), AlphaFold, design and drugs, and open problems. Uses **three.js** (vendored, MIT, `vendor/three-bundle.js`, rebuilt from `vendor/entry.js` with esbuild) and real structures from the RCSB PDB and AlphaFold DB (`genome/data`, packed by `genome/pack_data.py`). Storyboard: `storyboard-genome.md`.
+
+### Layout and rebuild
+```
+python build.py all          # dna -> docs/dna, genome -> docs/genome-proteins, hub -> docs/index.html
+python tts.py genome         # genome/narration.json -> genome/audio (Kokoro)
+python tests/gtest.py        # Playwright smoke test (needs system Chrome)
+```
+Data credits: PDB entries 1UBQ, 2HHB, 1HHO, 1HSG, 1QYS, 1C3W (RCSB PDB, CC0); AlphaFold DB models AF-P04637, AF-P37840, AF-P68871 (EMBL-EBI/DeepMind, CC BY 4.0). Key facts: Nurk et al. Science 2022 (T2T-CHM13); Liao et al. Nature 2023 (pangenome); Jumper et al. Nature 2021; 2024 Chemistry Nobel. Approximate figures are marked in the app.
